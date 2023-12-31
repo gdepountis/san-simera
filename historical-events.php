@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: Historical Events
+ * Plugin Name: San Simera
  * Description: Automatically post historical events "On This Day" using local JSON files with unique featured images daily at 06:00 AM, and categorize them under "Σαν Σήμερα".
  * Version: 1.0
  * Author: Depountis Georgios
