@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: San Simera
+ * Plugin Name: Historical Events
  * Description: Automatically post historical events "On This Day" using local JSON files with unique featured images daily at 06:00 AM, and categorize them under "Σαν Σήμερα".
  * Version: 1.0
  * Author: Depountis Georgios
@@ -109,23 +109,31 @@ if ($targetSpan) {
     }
 }
 
-// // Assume $domDocument is your DOMDocument object
+// Assume $domDocument is your DOMDocument object
 $xpath = new DOMXPath($domDocument);
 
-// XPaths for the specific templates
-$templates = [
-    '//p[a[contains(@href, "Template:%CE%9C%CE%AE%CE%BD%CE%B5%CF%82_%CE%94%CE%B5%CE%BA%CE%B5%CE%BC%CE%B2%CF%81%CE%AF%CE%BF%CF%85")]]',
-    '//p[a[contains(@href, "Template:%CE%97%CE%BC%CE%B5%CF%81%CE%BF%CE%BB%CF%8C%CE%B3%CE%B9%CE%BF%CE%A3%CE%B5%CE%A0%CE%AF%CE%BD%CE%B1%CE%BA%CE%B1")]]'
-];
+// XPath for any <a> elements linking to a page starting with "Template:"
+$templatesXPath = "//p[a[contains(@href, 'Template:')]]";
 
-foreach ($templates as $templateXPath) {
-    $pNodes = $xpath->query($templateXPath);
-    foreach ($pNodes as $pNode) {
-        // Remove the <p> element
-        $pNode->parentNode->removeChild($pNode);
-    }
+// Find all matching elements
+$templateElements = $xpath->query($templatesXPath);
+
+// Remove each matching element
+foreach ($templateElements as $element) {
+    $element->parentNode->removeChild($element);
 }
 
+// XPath to find the table containing the specific template link
+$templateTableXPath = "//table[.//a[contains(@href, 'Template:%CE%97%CE%BC%CE%B5%CF%81%CE%BF%CE%BB%CF%8C%CE%B3%CE%B9%CE%BF%CE%A3%CE%B5%CE%A0%CE%AF%CE%BD%CE%B1%CE%BA%CE%B1')]]";
+
+// Find the table element
+$templateTableElements = $xpath->query($templateTableXPath);
+
+// Remove the found table element
+foreach ($templateTableElements as $element) {
+    $element->parentNode->removeChild($element);
+}
+		
 // // Assume $domDocument is your DOMDocument object
 $xpath = new DOMXPath($domDocument);
 
